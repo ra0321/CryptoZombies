@@ -3,6 +3,9 @@ pragma solidity >=0.5.0 <0.6.0;
 import "./ZombieAttack.sol";
 import "./ERC721.sol";
 
+/// @title A contract that manages transfering zombie ownership
+/// @author Alphanet
+/// @dev Compliant with OpenZeppelin's implementation of the ERC721 spec draft
 contract ZombieOwnership is ZombieAttack, ERC721 {
 
     mapping (uint => address) zombieApprovals;
@@ -23,6 +26,12 @@ contract ZombieOwnership is ZombieAttack, ERC721 {
         emit Transfer(_from, _to, _tokenId);
     }
 
+    /// @notice ...
+    /// @param _from ...
+    /// @param _to ...
+    /// @param _tokenId ...
+    /// @return ...
+    /// @dev ...
     function transferFrom(address _from, address _to, uint256 _tokenId) external payable {
         require(zombieToOwner[_tokenId] == msg.sender || zombieApprovals[_tokenId] == msg.sender);
         _transfer(_from, _to, _tokenId);
