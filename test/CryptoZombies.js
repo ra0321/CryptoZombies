@@ -1,5 +1,6 @@
 const CryptoZombies = artifacts.require("CryptoZombies")
 const utils = require("./helpers/utils")
+const time = require("./helpers/time")
 const zombieNames = ["Zombie 1", "Zombie 2"]
 
 contract("CryptoZombies", (accounts) => {
@@ -55,5 +56,16 @@ contract("CryptoZombies", (accounts) => {
 			const newOwner = await contractInstance.ownerOf(zombieId)
 			assert.equal(newOwner, bob)
 		})
+	})
+
+	it("zombies should be able to attack another zombie", async () => {
+		let result
+		result = await contractInstance.createRandomZombie(zombieNames[0], {from: alice})
+		const firstZombieId = result.logs[0].args.zombieId.toNumber()
+		result = await contractInstance.createRandomZombie(zombieNames[1], {from: bob})
+		const secondZombieId = result.logs[0].args.zombieId.toNumber()
+		await time.increase(time.duration.days(1))
+		await contractInstance.attack(firstZombieId, secondZombieId, {from: alice})
+		assert.equal(result.receipt.status, true)
 	})
 })
