@@ -71,6 +71,19 @@ module.exports = {
     // network_id: 2111,   // This network is yours, in the cloud.
     // production: true    // Treats this network as if it was a public net. (default: false)
     // }
+    // Configuration for Loom Testnet
+    loom_testnet: {
+      provider: function() {
+        const privateKey = 'YOUR_PRIVATE_KEY';
+        const chainId = 'extdev-plasma-us1';
+        const writeUrl = 'wss://extdev-basechain-us1.dappchains.com/websocket';
+        const readUrl = 'wss://extdev-basechain-us1.dappchains.com/queryws';
+        const loomTruffleProvider = new LoomTruffleProvider(chainId, writeUrl, readUrl, privateKey);
+        loomTruffleProvider.createExtraAccountsFromMnemonic(mnemonic, 10);
+        return loomTruffleProvider;
+      },
+      network_id: '9545242630824'
+    }
   },
 
   // Set default mocha options here, use special reporters etc.
