@@ -38,10 +38,10 @@ contract ZombieHelper is ZombieFeeding {
         uint counter = 0;
 
         for (uint i = 0; i < zombies.length; i++) {
-        if (zombieToOwner[i] == _owner) {
-            result[counter] = i;
-            counter = counter.add(1);
-        }
+            if (zombieToOwner[i] == _owner) {
+                result[counter] = i;
+                counter = counter.add(1);
+            }
         }
         return result;
     }
